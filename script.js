@@ -99,6 +99,7 @@ if (isPlay) {
     // update progress bar
     const progressPercent = (currentTime / duration) * 100;
     progress.style.width=`${progressPercent}%`;
+    
     //Calculate display for duration
     const durationMinutes = Math.floor(duration / 60);
     let durationSecondes = Math.floor(duration % 60);
@@ -118,11 +119,20 @@ if (isPlay) {
         currentSecondes = `0${currentSecondes}`;
     }
     currentTimeEl.textContent = `${currentMinutes}:${currentSecondes}`;
+}
+}
+function setProgressBar (e){
+    const width = this.clientWidth;
+    const clickX = e.offsetX;
+    const { duration } = music;
+    const progressPercent = (clickX / width);
+    music.currentTime = duration * progressPercent;
+}
 
-}
-}
 
 // Event listeners
 prevBtn.addEventListener('click', prevSong);
 nextBtn.addEventListener('click', nextSong);
 music.addEventListener('timeupdate', updateProgressBar);
+progressContainer.addEventListener('click', setProgressBar);
+music.addEventListener('ended', nextSong);
